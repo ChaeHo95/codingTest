@@ -22,7 +22,7 @@ public class CodingTest1 {
         }
         for (int i = 0; i < id_list.length; i++) {
             for (String reported : report_content.get(id_list[i])) {
-                if (count.get(reported) == k) {
+                if (count.get(reported) >= k) {
                     answer[i]++;
                 }
             }
@@ -30,14 +30,14 @@ public class CodingTest1 {
 
         return answer;
     }
-    public int[] beforSolution2(String[] id_list, String[] report, int k) { // 12.5
+    public int[] beforSolution2(String[] id_list, String[] report, int k) { // 25
         int[] answer = new int[id_list.length];
 
         for(int i=0; i<id_list.length; i++){
             int index = i;
-            Arrays.asList(report).stream().distinct().filter(name -> name.contains(id_list[index] + " ")).forEach(counts ->{
+            Arrays.stream(report).distinct().filter(name -> name.contains(id_list[index] + " ")).forEach(counts ->{
                 String reporter = counts.replaceAll(id_list[index] + " ","");
-                if (Arrays.asList(report).stream().distinct().filter(name -> name.contains(" "+reporter)).count() == k){
+                if (Arrays.stream(report).distinct().filter(name -> name.contains(" "+reporter)).count() >= k){
                     answer[index]++;
                 };
             });
@@ -55,7 +55,7 @@ public class CodingTest1 {
         }
 
         return Arrays.stream(id_list).map(name -> {
-            String user = name;
+            final String user = name;
             List<String> reportMaps = reportDocuments.stream().filter(reported -> reported.startsWith(user+" ")).collect(Collectors.toList());
             return reportMaps.stream().filter(reportMap-> counts.getOrDefault(reportMap.split(" ")[1],0) >=k).count();
         }).mapToInt(Long::intValue).toArray();
