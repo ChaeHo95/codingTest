@@ -1,12 +1,31 @@
-import java.util.regex.Pattern;
-
 public class CodingTest3 {
 
     public String solution(String new_id) {
         new_id = new_id.toLowerCase();
-        String reg = "^[a-z\\\\d_\\-.]$";
-        System.out.println(new_id);
+
+        String reg = "[^-_.a-z0-9]";
         new_id = new_id.replaceAll(reg,"");
+
+        reg = "[.]{2,}";
+        new_id = new_id.replaceAll(reg,".");
+
+        reg = "^[.]|[.]$";
+        new_id = new_id.replaceAll(reg,"");
+
+        new_id = new_id.equals("") ? "a": new_id;
+
+        new_id = new_id.length() >= 16 ?  new_id.substring(0,15) : new_id;
+
+        reg = "[.]$";
+        new_id = new_id.replaceAll(reg,"");
+
+        if(new_id.length() < 3){
+
+            while (new_id.length() < 3){
+               new_id = new_id.concat(new_id.substring(new_id.length()-1));
+            }
+        }
+
         return new_id;
     }
     public static void main(String[] args) {
