@@ -5,11 +5,13 @@ public class CodingTest15 {
         int[] answer = new int[commands.length];
         for(int i=0; i<commands.length; i++){
             int[] arrayCopy = Arrays.copyOfRange(array, commands[i][0] -1, commands[i][1]);
+            // Arrays.copyOfRange() 메소드는 원본 배열를 시작점에서 끝점을 지정해서 복사하는 메소드
             Arrays.sort(arrayCopy);
             answer[i] = arrayCopy[commands[i][2] - 1];
         }
         return answer;
     }
+
 
     public static void main(String[] args) {
         CodingTest15 codingTest15 = new CodingTest15();
